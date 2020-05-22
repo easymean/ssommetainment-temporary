@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const router = Router();
+import * as express from 'express';
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send("user 이후 url");

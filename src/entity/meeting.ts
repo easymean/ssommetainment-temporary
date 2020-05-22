@@ -1,43 +1,55 @@
-import {Entity, Column, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Common } from './common';
-import { Reservation } from './reservation';
-import { Place } from './place';
-import { Sommelier } from './sommelier';
+import { ReservationRepository } from './reservation';
+import { PlaceRepository } from './place';
+import { SommelierRepository } from './sommelier';
 
 @Entity({
   name: 'Meetings',
 })
-export class Meeting extends Common {
-
-  @Column({name:'capacity', type:'int', default:0})
+export class MeetingRepository extends Common {
+  @Column({ name: 'capacity', type: 'int', default: 0 })
   public capacity: number;
 
-  @Column({name:'pay', type:'int', default:0})
+  @Column({ name: 'pay', type: 'int', default: 0 })
   public pay: number;
-  
-  @Column({name:'startAt', type:'timestamp',nullable:false, default: () => 'CURRENT_TIMESTAMP'})
+
+  @Column({
+    name: 'startAt',
+    type: 'timestamp',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   public startAt: string;
 
-  @Column({name:'endAt', type:'timestamp', nullable:false, default: () => 'CURRENT_TIMESTAMP'})
+  @Column({
+    name: 'endAt',
+    type: 'timestamp',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   public endAt: string;
 
-  @Column({name:'info', type:'text'})
+  @Column({ name: 'info', type: 'text' })
   public email: string;
 
-  @Column({name:'description', type:'text'})
+  @Column({ name: 'description', type: 'text' })
   public password: string;
 
-  @Column({name:'isAvailable', type:'tinyint', default:0})
+  @Column({ name: 'isAvailable', type: 'tinyint', default: 0 })
   public isAvailable: number;
 
-  @OneToMany(type=>Reservation, reservation=> reservation.meeting)
-  public reservations: Reservation[];
+  @OneToMany(
+    (type) => ReservationRepository,
+    (reservation) => reservation.meeting,
+  )
+  public reservations: ReservationRepository[];
 
-  @ManyToOne(type=>Place, place=>place.meetings)
-  @JoinColumn({name: 'placeID', referencedColumnName:'id'})
-  public place: Place
+  @ManyToOne((type) => PlaceRepository, (place) => place.meetings)
+  @JoinColumn({ name: 'placeID', referencedColumnName: 'id' })
+  public place: PlaceRepository;
 
-  @ManyToOne(type=>Sommelier, sommelier=>sommelier.meetings)
-  @JoinColumn({name: 'sommelierID', referencedColumnName:'id'})
-  public sommelier: Sommelier
+  @ManyToOne((type) => SommelierRepository, (sommelier) => sommelier.meetings)
+  @JoinColumn({ name: 'sommelierID', referencedColumnName: 'id' })
+  public sommelier: SommelierRepository;
 }

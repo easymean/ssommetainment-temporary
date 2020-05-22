@@ -1,12 +1,13 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { Common } from './common';
-import { OwnPlace } from './ownPlace';
-import { Reservation } from './reservation';
+import { OwnPlaceRepository } from './ownPlace';
+import { ReviewRepository } from './review';
+import { ReservationRepository } from './reservation';
 
 @Entity({
   name: 'Users',
 })
-export class User extends Common {
+export class UserRepository extends Common {
   @Column({ name: 'email', type: 'varchar', length: 250 })
   public email: string;
 
@@ -19,9 +20,12 @@ export class User extends Common {
   @Column({ name: 'isAdmin', type: 'tinyint', default: 0 })
   public isAdmin: number;
 
-  @OneToMany((type) => OwnPlace, (ownPlace) => ownPlace.user)
-  public ownPlaces: OwnPlace[];
+  @OneToMany((type) => OwnPlaceRepository, (ownPlace) => ownPlace.user)
+  public ownPlaces: OwnPlaceRepository[];
 
-  @OneToMany((type) => Reservation, (reservation) => reservation.user)
-  public reservations: Reservation[];
+  @OneToMany((type) => ReservationRepository, (reservation) => reservation.user)
+  public reservations: ReservationRepository[];
+
+  @OneToMany((type) => ReviewRepository, (review) => review.user)
+  public reviews: ReviewRepository[];
 }
