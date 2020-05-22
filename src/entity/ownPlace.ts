@@ -4,7 +4,7 @@ import { PlaceEntity } from './place';
 import { SommelierEntity } from './sommelier';
 
 @Entity({
-  name: 'ownPlaces',
+  name: 'OwnPlaces',
 })
 export class OwnPlaceEntity extends Common {
   @ManyToOne((type) => PlaceEntity, (place) => place.ownPlaces)
