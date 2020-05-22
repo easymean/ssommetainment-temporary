@@ -1,13 +1,13 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Common } from './common';
-import { UserRepository } from './user';
-import { MeetingRepository } from './meeting';
-import { ReviewRepository } from './review';
+import { UserEntity } from './user';
+import { MeetingEntity } from './meeting';
+import { ReviewEntity } from './review';
 
 @Entity({
   name: 'Reservations',
 })
-export class ReservationRepository extends Common {
+export class ReservationEntity extends Common {
   @Column({ name: 'headcount', type: 'int', default: 0 })
   public headcount: number;
 
@@ -22,14 +22,14 @@ export class ReservationRepository extends Common {
   @Column({ name: 'isAvailable', type: 'tinyint', default: 0 })
   public isAvailable: number;
 
-  @ManyToOne((type) => UserRepository, (user) => user.reservations)
+  @ManyToOne((type) => UserEntity, (user) => user.reservations)
   @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
-  public user: UserRepository;
+  public user: UserEntity;
 
-  @ManyToOne((type) => MeetingRepository, (meeting) => meeting.reservations)
+  @ManyToOne((type) => MeetingEntity, (meeting) => meeting.reservations)
   @JoinColumn({ name: 'meetingId', referencedColumnName: 'id' })
-  public meeting: MeetingRepository;
+  public meeting: MeetingEntity;
 
-  @OneToMany((type) => ReviewRepository, (review) => review.reservation)
-  public reviews: ReviewRepository[];
+  @OneToMany((type) => ReviewEntity, (review) => review.reservation)
+  public reviews: ReviewEntity[];
 }

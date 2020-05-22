@@ -1,21 +1,28 @@
-import {Entity, Column} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Common } from './common';
+import { PlaceEntity } from './place';
 
 @Entity({
-  name: 'Users',
+  name: 'PlaceTimes',
 })
-export class User extends Common {
-  
-  @Column({name:'email', type:'varchar', length:250})
-  public email: string;
+export class PlaceTimeEntity extends Common {
+  @Column({
+    name: 'startAt',
+    type: 'timestamp',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  public startAt: string;
 
-  @Column({name:'password', type:'varchar', length:100})
-  public password: string;
+  @Column({
+    name: 'endAt',
+    type: 'timestamp',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  public endAt: string;
 
-  @Column({name:'nickname', type:'varchar', length:100})
-  public nickname: string;
-
-  @Column({name:'isAdmin', type:'tinyint', default:0})
-  public isAdmin: number;
-
+  @ManyToOne((type) => PlaceEntity, (place) => place.placeTimes)
+  @JoinColumn({ name: 'placeId', referencedColumnName: 'id' })
+  public place: PlaceEntity;
 }

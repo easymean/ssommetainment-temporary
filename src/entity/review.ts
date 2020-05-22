@@ -1,12 +1,12 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Common } from './common';
-import { UserRepository } from './user';
-import { ReservationRepository } from './reservation';
+import { UserEntity } from './user';
+import { ReservationEntity } from './reservation';
 
 @Entity({
   name: 'Reviews',
 })
-export class ReviewRepository extends Common {
+export class ReviewEntity extends Common {
   @Column({ name: 'rate', type: 'int', default: 0 })
   public rate: number;
 
@@ -21,14 +21,11 @@ export class ReviewRepository extends Common {
   @Column({ name: 'description', type: 'text' })
   public description: number;
 
-  @ManyToOne((type) => UserRepository, (user) => user.reviews)
+  @ManyToOne((type) => UserEntity, (user) => user.reviews)
   @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
-  public user: UserRepository;
+  public user: UserEntity;
 
-  @ManyToOne(
-    (type) => ReservationRepository,
-    (reservation) => reservation.reviews,
-  )
+  @ManyToOne((type) => ReservationEntity, (reservation) => reservation.reviews)
   @JoinColumn({ name: 'reservationId', referencedColumnName: 'id' })
-  public reservation: ReservationRepository;
+  public reservation: ReservationEntity;
 }

@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 
 const router = express.Router();
 
-const rentOrOwnPlace = (req: Request): number => {
+const whosePlace = (req: Request): number => {
   const userId = req.body.user.id;
 
   return 1;

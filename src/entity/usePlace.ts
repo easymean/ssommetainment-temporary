@@ -4,17 +4,17 @@ import { PlaceEntity } from './place';
 import { SommelierEntity } from './sommelier';
 
 @Entity({
-  name: 'ownPlaces',
+  name: 'UsePlaces',
 })
-export class OwnPlaceEntity extends Common {
-  @ManyToOne((type) => PlaceEntity, (place) => place.ownPlaces)
+export class UsePlaceEntity extends Common {
+  @ManyToOne((type) => PlaceEntity, (place) => place.usePlaces)
   @JoinColumn({
     name: 'placeId',
     referencedColumnName: 'id',
   })
   public place: PlaceEntity;
 
-  @ManyToOne((type) => SommelierEntity, (sommelier) => sommelier.ownPlaces)
+  @ManyToOne((type) => SommelierEntity, (sommelier) => sommelier.usePlaces)
   @JoinColumn({
     name: 'sommelierId',
     referencedColumnName: 'id',

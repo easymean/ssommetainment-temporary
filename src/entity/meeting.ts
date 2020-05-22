@@ -1,13 +1,13 @@
 import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Common } from './common';
-import { ReservationRepository } from './reservation';
-import { PlaceRepository } from './place';
-import { SommelierRepository } from './sommelier';
+import { ReservationEntity } from './reservation';
+import { PlaceEntity } from './place';
+import { SommelierEntity } from './sommelier';
 
 @Entity({
   name: 'Meetings',
 })
-export class MeetingRepository extends Common {
+export class MeetingEntity extends Common {
   @Column({ name: 'capacity', type: 'int', default: 0 })
   public capacity: number;
 
@@ -39,17 +39,14 @@ export class MeetingRepository extends Common {
   @Column({ name: 'isAvailable', type: 'tinyint', default: 0 })
   public isAvailable: number;
 
-  @OneToMany(
-    (type) => ReservationRepository,
-    (reservation) => reservation.meeting,
-  )
-  public reservations: ReservationRepository[];
+  @OneToMany((type) => ReservationEntity, (reservation) => reservation.meeting)
+  public reservations: ReservationEntity[];
 
-  @ManyToOne((type) => PlaceRepository, (place) => place.meetings)
+  @ManyToOne((type) => PlaceEntity, (place) => place.meetings)
   @JoinColumn({ name: 'placeID', referencedColumnName: 'id' })
-  public place: PlaceRepository;
+  public place: PlaceEntity;
 
-  @ManyToOne((type) => SommelierRepository, (sommelier) => sommelier.meetings)
+  @ManyToOne((type) => SommelierEntity, (sommelier) => sommelier.meetings)
   @JoinColumn({ name: 'sommelierID', referencedColumnName: 'id' })
-  public sommelier: SommelierRepository;
+  public sommelier: SommelierEntity;
 }
